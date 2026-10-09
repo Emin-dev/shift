@@ -27,7 +27,6 @@ jobs:
       CI: "true"
       RUSTUP_TOOLCHAIN: "1.99.0"
       CARGO_TERM_COLOR: always
-      PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/playwright-browsers
     steps:
       - name: Check out the exact requested revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -41,6 +40,10 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
           printf 'Testing exact revision %s\n' "$EXPECTED_SHA"
+      - name: Set disposable browser storage on the allocated runner
+        timeout-minutes: 1
+        run: |
+          printf 'PLAYWRIGHT_BROWSERS_PATH=%s/playwright-browsers\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
       - name: Set up pinned Node without a dependency cache
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
