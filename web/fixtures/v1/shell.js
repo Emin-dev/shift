@@ -1,0 +1,1 @@
+import '/fixtures/frame.js';

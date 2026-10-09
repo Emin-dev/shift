@@ -1,0 +1,9 @@
+{
+  "name": "shift-browser-test-runner",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Development-only external browser runner; never installed by Vercel",
+  "scripts": {"test": "node ../browser.mjs"},
+  "engines": {"node": ">=20"},
+  "devDependencies": {"playwright": "1.62.1"}
+}

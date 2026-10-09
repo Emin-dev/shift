@@ -1,0 +1,17 @@
+{
+  "name": "shift-transition-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bash scripts/build.sh",
+    "test:browser": "node tests/browser.mjs",
+    "test:wasm": "node tests/wasm.mjs",
+    "test:regressions": "node tests/review-regressions.mjs && node tests/cancel-regression.mjs",
+    "test:controller": "node tests/controller.mjs && node tests/controller-security.mjs",
+    "build:static": "node scripts/check-static.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
