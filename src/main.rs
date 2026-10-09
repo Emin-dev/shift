@@ -215,7 +215,7 @@ fn reply(status: &str, kind: &str, body: &[u8], cache: &str) -> std::io::Result<
     })
 }
 fn write_reply(stream: &mut TcpStream, result: Reply, deadline: Instant) -> std::io::Result<()> {
-    let mut bytes=format!("HTTP/1.1 {}\r\nContent-Type: {}\r\nContent-Length: {}\r\nCache-Control: {}\r\nX-Content-Type-Options: nosniff\r\nReferrer-Policy: no-referrer\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'\r\nConnection: close\r\n\r\n",result.status,result.kind,result.body.len(),result.cache).into_bytes();
+    let mut bytes=format!("HTTP/1.1 {}\r\nContent-Type: {}\r\nContent-Length: {}\r\nCache-Control: {}\r\nX-Content-Type-Options: nosniff\r\nReferrer-Policy: no-referrer\r\nContent-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'\r\nConnection: close\r\n\r\n",result.status,result.kind,result.body.len(),result.cache).into_bytes();
     bytes.extend_from_slice(&result.body);
     let mut offset = 0;
     while offset < bytes.len() {

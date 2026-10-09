@@ -2,3 +2,6 @@
 /* Secondary copy remains readable rather than fading into the fixture surface. */
 .side-label,.side-note p,.sidebar-foot,.small-muted,.muted,.tip,.config-limit,.run-row #status,.live-indicator,.address,.browser-footer,.trace-count,.timeline small,.timeline time,.timeline .empty-trace strong,.timeline .empty-trace>span:first-child,.trace-caption,.metric-label,.result-strip small,.footer,.empty-preview p{color:#63715a}
 .scenario-card small{color:#65765b}.mode-tag{color:#4c6141}.mono{color:#63775b}.metric-label,.footer,.trace-caption,.browser-footer,.address{font-size:10px}.muted{font-size:10px}.timeline small{font-size:11px}.trace-count{font-size:10px}.button{min-height:42px}@media(max-width:650px){.button{min-height:44px}.footer,.footer span,.result-strip small{font-size:10px}.metric-label{font-size:9px}.config-limit{font-size:9px}.run-row #status{font-size:11px}.notice p{font-size:11px}.address{font-size:9px}}
+
+/* Decorative arrows use vectors so they do not depend on symbol-font coverage. */
+.icon{display:inline-block;vertical-align:-.125em;flex-shrink:0}

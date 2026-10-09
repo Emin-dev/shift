@@ -1,11 +1,24 @@
 // No routing, request interception, service-worker override or cache disabling.
 import {createRequire} from 'node:module';
+import {createServer} from 'node:http';
 import assert from 'node:assert/strict';
 import {readFile,mkdir} from 'node:fs/promises';
 const require=createRequire(new URL('./browser-runner/package.json',import.meta.url));
 assert.equal(require('playwright/package.json').version,'1.62.1','Use the locked standalone browser runner.');
 const {chromium}=require('playwright');
 const base=process.env.SHIFT_URL||'http://127.0.0.1:4183';
+async function checkLocalhostFraming(context){
+  if(new URL(base).origin!=='http://127.0.0.1:4183')return;
+  const server=createServer((_req,res)=>{res.writeHead(200,{'Content-Type':'text/html'});res.end('<!doctype html><iframe src="http://127.0.0.1:4183/" title="Cross-origin framing probe"></iframe>');});
+  await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(0,'127.0.0.1',resolve);});
+  const probe=await context.newPage();
+  try{
+    const blocked=probe.waitForEvent('console',{predicate:message=>message.type()==='error'&&message.text().includes('frame-ancestors'),timeout:10000});
+    await Promise.all([blocked,probe.goto(`http://127.0.0.1:${server.address().port}/`)]);
+    assert.equal(await probe.frameLocator('iframe').locator('#run').count(),0,'Cross-origin ancestor must not load the controller UI');
+    console.log('Localhost framing: same-origin fixture workflows pass and cross-origin framing is refused by CSP.');
+  }finally{await probe.close();await new Promise(resolve=>server.close(resolve));}
+}
 const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
 const context=await browser.newContext({viewport:{width:1440,height:1180},acceptDownloads:true});
 const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -36,6 +49,8 @@ try{
   await page.getByRole('radio',{name:'Keep old assets'}).check();await run();await result('Old tab completed');
   await page.getByRole('button',{name:'Replay trace'}).click();await page.getByRole('button',{name:'Stop replay'}).click();await result('Replay stopped');
   await page.getByRole('button',{name:'How it works'}).click();assert.equal(await page.locator('#scopeDetails').isVisible(),true);
+  assert.ok((await page.locator('#scopeDetails').textContent()).includes('Safari and real phones remain unverified.'));
+  for(const selector of ['#scopeToggle .icon','.scenario-symbol.amber .icon']){const icon=page.locator(selector);assert.equal(await icon.getAttribute('aria-hidden'),'true');assert.equal(await icon.getAttribute('focusable'),'false');const box=await icon.boundingBox();assert.ok(box&&box.width>0&&box.height>0,'Decorative vector must render at a nonzero size');}
   await page.getByRole('button',{name:'How it works'}).click();assert.equal(await page.locator('#scopeDetails').isVisible(),false);
   await page.screenshot({path:new URL('../docs/desktop-result.png',import.meta.url).pathname,fullPage:true});
   await page.setViewportSize({width:390,height:844});
@@ -43,5 +58,6 @@ try{
   await page.screenshot({path:new URL('../docs/phone-result.png',import.meta.url).pathname,fullPage:true});
   await page.getByRole('radio',{name:'Retire old assets'}).check();await run();await result('Failure captured');await page.getByRole('button',{name:'Recover in v2'}).click();await result('Recovered in v2');
   assert.deepEqual(errors,[]);
+  await checkLocalhostFraming(context);
   console.log('Browser workflow passed: cold retirement/recovery, retention, warm module, expired session/recovery, cancellation, rerun, replay/stop, sanitized export, responsive overflow, phone-sized recovery.');
 }finally{await browser.close();}

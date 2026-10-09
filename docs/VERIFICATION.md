@@ -1,5 +1,7 @@
 # Writer verification — 2026-10-09
 
+Historical implementation records below describe their original verification point. See the latest CI evidence and follow-up section at the end for the current status.
+
 ## Passed against the built source
 
 - `cargo fmt --check`
@@ -44,3 +46,11 @@ The original snapshot and reviewer evidence were preserved outside this app. Thi
 ## Conservative distribution-notice coverage
 
 The verbatim standard-library notice from the pinned Rust 1.99.0 distribution is preserved in source and public output. The static gate checks both copies against SHA-256 5647be074c8edf7339fd863055923a8fc80bc5610a8d4661ec3b767b9d392c27 and the exact 1,499,465-byte size. This is conservative notice coverage, not legal clearance or a claim that every listed component is linked into this WASM. Runtime code, UI, and resource limits were unchanged by this documentation packaging step.
+
+## Exact-revision CI and hosted follow-up — 2026-10-09
+
+- Commit `35ff32035cdfd3ee60d5f72143a593ee577aa97b` passed both [PR CI](https://github.com/Emin-dev/shift/actions/runs/37988913452) and [push CI](https://github.com/Emin-dev/shift/actions/runs/37988912378). Logs confirm exact-head checkout, 19 native tests, formatting, strict Clippy, the Node-only static gate, committed/rebuilt WASM equality, actual WASM and controller regressions, and real Chromium browser workflows in both controller and static-fixture modes.
+- These runs supersede the earlier browser-execution-pending status for that exact commit. They do not establish Safari, real-phone, screen-reader or comprehensive visual coverage. Screenshots remained on the disposable CI runner and were not retained as artifacts.
+- A hosted follow-up identified stale verification copy and font-dependent decorative arrows. The UI now dates its specific Chromium evidence and retains the Safari/real-phone limitation; those arrows use non-focusable, aria-hidden inline SVG paths with the same inherited sizing and color.
+- The localhost controller now sends `frame-ancestors 'self'`, matching the existing public Vercel policy. HTTP checks cover the top-level and fixture response policies. A real Chromium cross-origin-framing rejection check was added alongside the existing same-origin fixture workflow tests.
+- This follow-up revision requires its own exact-head CI and hosted visual recheck before release. Added browser assertions are not claimed as passed until that run completes.
