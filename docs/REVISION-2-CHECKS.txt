@@ -1,0 +1,99 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.00s
+     Running unittests src/lib.rs (target/debug/deps/shift_core-38cfaa9144e2a206)
+
+running 12 tests
+test tests::byte_limits_include_multibyte ... ok
+test tests::arbitrary_routes_rejected ... ok
+test tests::cancelled_run_is_terminal ... ok
+test tests::lost_draft_is_never_safe ... ok
+test tests::cannot_deploy_before_saving ... ok
+test tests::passed_run_is_terminal ... ok
+test tests::recovery_requires_failure ... ok
+test tests::retired_asset_recovery ... ok
+test tests::route_allowlist_is_exact ... ok
+test tests::session_expiry_is_failure ... ok
+test tests::successful_old_tab_journey ... ok
+test tests::unknown_abi_values_are_rejected ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/shift_fixture-97ee35835455eaa5)
+
+running 7 tests
+test tests::rejects_duplicate_critical_headers ... ok
+test tests::allows_only_bodyless_fixture_requests ... ok
+test tests::deadline_is_total_not_per_read ... ok
+test tests::rejects_malformed_and_folded_headers ... ok
+test tests::connection_slots_are_bounded_and_released ... ok
+test tests::rejects_transfer_framing_and_invalid_lengths ... ok
+test tests::rejects_unbounded_header_count ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests shift_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+    Finished `release` profile [optimized] target(s) in 0.03s
+WASM: 11 assertions passed against the actual browser binary.
+Review regressions: 13 assertions passed (persistent errors, honest UI claim, explicit static build). These are VM/static checks, not browser UI passes.
+Focus token source contrast on #ffffff: 6.42:1
+Focus token source contrast on #f7f8f5: 6.02:1
+Focus token source contrast on #f5f8ef: 5.98:1
+Focus token source contrast on #fcfcfa: 6.25:1
+Focus token source contrast on #e3eadc: 5.22:1
+cleanup-resolves: no new controller reset after cancel; cancelled report, ownership and idle state verified.
+cleanup-aborts: no new controller reset after cancel; cancelled report, ownership and idle state verified.
+Static build gate passed: 15 files, 49430 bytes, actual WASM instantiated. No Rust toolchain needed.
+Rust localhost HTTP controller: 45 assertions passed.
+[
+  {
+    "test": "body-origin-override",
+    "status": "HTTP/1.1 413 Content Too Large"
+  },
+  {
+    "test": "body-host-origin-override",
+    "status": "HTTP/1.1 413 Content Too Large"
+  },
+  {
+    "test": "unframed-body-never-headers",
+    "status": "HTTP/1.1 403 Forbidden"
+  },
+  {
+    "test": "duplicate-origin",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "duplicate-host",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "folded-header",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "duplicate-length",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "transfer-encoding",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "oversized-headers",
+    "status": "HTTP/1.1 431 Request Header Fields Too Large"
+  },
+  {
+    "test": "slow-connection-isolated",
+    "normalRequestMs": 1,
+    "slowClosedMs": 2005
+  },
+  {
+    "test": "eight-connection-bound",
+    "extraConnectionClosed": true
+  }
+]
+Controller security: 9 rejection cases plus isolation, absolute deadline and admission-cap regressions passed.

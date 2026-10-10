@@ -1,0 +1,10 @@
+{
+  "toolchain": "Rust 1.99.0",
+  "artifact": "COPYRIGHT-library.html",
+  "source": "Official pinned Rust 1.99.0 distribution: share/doc/rust/COPYRIGHT-library.html",
+  "sourcePath": "third-party/rust-1.99.0/COPYRIGHT-library.html",
+  "publicPath": "web/RUST-STANDARD-LIBRARY-NOTICES.html",
+  "bytes": 1499465,
+  "sha256": "5647be074c8edf7339fd863055923a8fc80bc5610a8d4661ec3b767b9d392c27",
+  "scope": "Conservative verbatim standard-library notice packaging. Zero Cargo dependencies is not proof that no standard-library notice applies. No legal-clearance claim."
+}

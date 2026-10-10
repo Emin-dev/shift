@@ -1,0 +1,48 @@
+[
+  {
+    "test": "body-origin-override",
+    "status": "HTTP/1.1 413 Content Too Large"
+  },
+  {
+    "test": "body-host-origin-override",
+    "status": "HTTP/1.1 413 Content Too Large"
+  },
+  {
+    "test": "unframed-body-never-headers",
+    "status": "HTTP/1.1 403 Forbidden"
+  },
+  {
+    "test": "duplicate-origin",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "duplicate-host",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "folded-header",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "duplicate-length",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "transfer-encoding",
+    "status": "HTTP/1.1 400 Bad Request"
+  },
+  {
+    "test": "oversized-headers",
+    "status": "HTTP/1.1 431 Request Header Fields Too Large"
+  },
+  {
+    "test": "slow-connection-isolated",
+    "normalRequestMs": 1,
+    "slowClosedMs": 2004
+  },
+  {
+    "test": "eight-connection-bound",
+    "extraConnectionClosed": true
+  }
+]
+Controller security: 9 rejection cases plus isolation, absolute deadline and admission-cap regressions passed.

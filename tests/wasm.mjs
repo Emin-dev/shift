@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+const {instance}=await WebAssembly.instantiate(await readFile(new URL('../web/assets/shift_core.wasm',import.meta.url)));
+const c=instance.exports;
+assert.equal(c.shift_version(),1);
+assert.equal(c.shift_validate_draft(0),0);
+assert.equal(c.shift_validate_draft(4096),1);
+assert.equal(c.shift_validate_draft(4097),0);
+assert.equal(c.shift_max_events(),64);
+let p=0;for(const e of [1,2,3,5,7])p=c.shift_transition(p,e);
+assert.equal(p,6);assert.equal(c.shift_outcome(p,1),3);assert.equal(c.shift_outcome(p,0),5);
+assert.equal(c.shift_transition(0,7)>>>0,0xffffffff);
+assert.equal(c.shift_transition(99,99)>>>0,0xffffffff);
+assert.equal(c.shift_transition(7,1)>>>0,0xffffffff);
+console.log('WASM: 11 assertions passed against the actual browser binary.');

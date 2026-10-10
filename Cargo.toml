@@ -1,0 +1,20 @@
+[package]
+name = "shift-core"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Bounded release-transition scenario validation and local fixture controller"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "shift-fixture"
+path = "src/main.rs"
+
+[profile.release]
+lto = true
+opt-level = "s"
+codegen-units = 1
+strip = true
+panic = "abort"
