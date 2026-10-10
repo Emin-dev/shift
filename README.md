@@ -4,6 +4,20 @@ A small release-transition lab: leave an old tab open, activate a new build, con
 
 **This repository contains an honest bounded experiment, not a production deployment verifier.** It never accepts arbitrary external target URLs. Public hosting is static, with no backend functions, accounts, uploads, telemetry, or external requests.
 
+## Try the demo
+
+[Open the Shift demo](https://project-bbih8.vercel.app/) with the bundled synthetic journal draft. No account or installation is needed.
+
+1. **Cold failure:** select **Retire old assets**, leave **Load the lazy module before release** unchecked, then choose **Run experiment**. Expect **Failure captured** and the **Old lazy module unavailable** trace event. The missing fixture module is the expected result.
+2. **Recovery:** choose **Recover in v2**. Expect **Restored in v2** and **Recovery verified**; the new fixture has restored the same draft and completed its synthetic journey.
+3. Choose **Export JSON** before starting another experiment to keep the cold/recovery trace. Draft text, draft digests, synthetic session values and absolute URLs are omitted.
+4. **Warm comparison:** keep **Retire old assets**, check **Load the lazy module before release**, and choose **Run experiment** again. Expect **Passed** and **Reused loaded module**: the old v1 journey completes using its already loaded module.
+5. Choose **Export JSON** again to keep the warm trace. Compare its `warmModuleRegistry: true` with `false` in the cold trace. Starting a new run replaces the displayed trace.
+
+This comparison demonstrates the document's module registry, not an HTTP-cache hit. The public demo simulates the release boundary; it does not switch a hosted deployment or test real authentication. **Replay trace** plays back recorded events without rerunning the journey.
+
+For the separate Rust localhost controller, which can retire the same pinned module URL, see [Run and build](#run-and-build). Read [Limits and next validation gates](#limits-and-next-validation-gates) before interpreting either mode as production evidence.
+
 ## Two explicit execution modes
 
 ### Static browser fixture (published demo)
