@@ -54,3 +54,9 @@ The verbatim standard-library notice from the pinned Rust 1.99.0 distribution is
 - A hosted follow-up identified stale verification copy and font-dependent decorative arrows. The UI now dates its specific Chromium evidence and retains the Safari/real-phone limitation; those arrows use non-focusable, aria-hidden inline SVG paths with the same inherited sizing and color.
 - The localhost controller now sends `frame-ancestors 'self'`, matching the existing public Vercel policy. HTTP checks cover the top-level and fixture response policies. A real Chromium cross-origin-framing rejection check was added alongside the existing same-origin fixture workflow tests.
 - This follow-up revision requires its own exact-head CI and hosted visual recheck before release. Added browser assertions are not claimed as passed until that run completes.
+
+## Current exact-revision CI evidence — 2026-10-10
+
+- Commit `83abd42f9eb962a20a0ebadcd09c6138c144ef73` passed [exact-revision CI run 38070570720](https://github.com/Emin-dev/shift/actions/runs/38070570720) on 10 October 2026. The run verified the checkout identity, passed the Node-only static gate, rebuilt WASM and confirmed equality with the committed artifact, and passed native, WASM, source and controller regressions.
+- Real Chromium workflows passed against both the localhost controller and the separate static-fixture server, including the controller's cross-origin-framing rejection check. This supersedes the pending automated-check statements above for this exact revision; the earlier records remain historical.
+- This CI result does not establish external hosted visual acceptance, Safari, physical-phone, screen-reader or comprehensive visual coverage. Those remain separate validation gates; a phone-sized Chromium viewport is not a physical-device test.

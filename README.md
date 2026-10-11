@@ -68,7 +68,7 @@ node tests/browser.mjs
 SHIFT_URL=https://your-authorized-preview.example node tests/browser.mjs
 ```
 
-Playwright is an **external development/test runner**, never bundled in the public demo. `CHROMIUM_PATH` can select an installed compatible Chromium. The script uses no request routing or cache overrides. It writes real screenshots only after it executes successfully.
+Playwright is an **external development/test runner**, never bundled in the public demo. `CHROMIUM_PATH` can select an installed compatible Chromium. The script uses no request routing or cache overrides. Screenshots are captured during execution; their presence alone does not establish a passed test.
 
 ## What is checked
 
