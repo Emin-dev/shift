@@ -8,6 +8,8 @@ A small release-transition lab: leave an old tab open, activate a new build, con
 
 [Open the Shift demo](https://project-bbih8.vercel.app/) with the bundled synthetic journal draft. No account or installation is needed.
 
+For a step-by-step exercise with expected report fields and limitations, see the [first-use guide](docs/FIRST-USE.md).
+
 1. **Cold failure:** select **Retire old assets**, leave **Load the lazy module before release** unchecked, then choose **Run experiment**. Expect **Failure captured** and the **Old lazy module unavailable** trace event. The missing fixture module is the expected result.
 2. **Recovery:** choose **Recover in v2**. Expect **Restored in v2** and **Recovery verified**; the new fixture has restored the same draft and completed its synthetic journey.
 3. Choose **Export JSON** before starting another experiment to keep the cold/recovery trace. Draft text, draft digests, synthetic session values and absolute URLs are omitted.
